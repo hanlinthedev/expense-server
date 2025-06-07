@@ -1,0 +1,118 @@
+ပေ းထားသည့် Data List
+--------------------
+[
+ {
+ "id": "Txn000001",
+ "service": "CashIn With MPU",
+ "amount": 200000,
+ "senderName": "MPU_BILLER",
+ "senderId": "B000001",
+ "senderClient": "biller",
+ "receiverName": "Aung Aung",
+ "receiverId": "C000001",
+ "receiverClient": "customer",
+ "creditDebit":
+ [
+ {
+ "amount": 200000,
+ "description": "Origin Amount",
+ "credit":
+ {
+ "target": "C000001"
+ },
+ "debit":
+ {
+ "target": "B000001"
+ }
+ },
+ {
+ "amount": 500,
+ "fees": "Cashin Fee",
+ "credit":
+ {
+ "target": "S000001"
+ },
+ "debit":
+ {
+ "target": "C000001"
+ }
+ }
+ ]
+ },
+ {
+ "id": "Txn000002",
+ "service": "Transfer to Wallet",
+ "amount": 50000,
+ "senderName": "Aung Aung",
+ "senderId": "C000001",
+ "senderClient": "customer",
+ "receiverName": "Bo Bo",
+ "receiverId": "C000002",
+ "receiverClient": "customer",
+ "creditDebit":
+ [
+ {
+ "amount": 50000,
+ "description": "Origin Amount",
+ "credit":
+ {
+ "target": "C000002"
+ },
+ "debit":
+ {
+ "target": "C000001"
+ }
+ }
+ ]
+ },
+ {
+ "id": "Txn000003",
+ "service": "Pay Merchant",
+ "amount": 20000,
+ "senderName": "Bo Bo",
+ "senderId": "C000002",
+ "senderClient": "customer",
+ "receiverName": "Merchant 001",
+ "receiverId": "M000001",
+ "receiverClient": "merchant",
+ "creditDebit":
+ [
+ {
+ "amount": 20000,
+ "description": "Origin Amount",
+ "credit":
+ {
+ "target": "M000001"
+ },
+ "debit":
+ {
+ "target": "C000002"
+ }
+ },
+ {
+ "amount": 1000,
+ "description": "Cashback",
+ "credit":
+ {
+ "target": "C000002"
+ },
+ "debit":
+ {
+ "target": "M000001"
+ }
+ }
+ ]
+ }
+]
+------------
+ပေ းထားသည့် Data List ပေ *မူတည် ပ. ီး အေ ာက်ပါအတိုင်း result ရရန် function ရေ း ပေ းရန်။
+- client အ နေ 9ှင့် customer ဖြ စ်တာကိုသာ တွက်ချက် ပေ းရန်။ merchant 9ှင့် biller အတွက်
+တွက်ချက် ပေ းရန်မလိုပါ။
+Result Data
+*************
+[
+{"id":"C000001", "name":?, "client":"customer", "balance": ? ,
+"totalCredit": ? , "totalDebit": ? },
+ {"id":"C000002", "name":?, "client":"customer", "balance": ? ,
+"totalCredit": ? , "totalDebit": ? }
+]
