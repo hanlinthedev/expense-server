@@ -171,6 +171,10 @@ const config = {
         "fromEnvVar": null,
         "value": "darwin-arm64",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -188,6 +192,7 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -196,8 +201,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id             String     @id @default(uuid())\n  email          String     @unique\n  password       String\n  name           String\n  categories     Category[]\n  expenses       Expense[]\n  incomes        Income[]\n  isEmailVerifed Boolean?   @default(false)\n  emailVerified  DateTime?\n  resetToken     String?\n  resetTokenExp  DateTime?\n  createdAt      DateTime   @default(now())\n  updatedAt      DateTime   @updatedAt\n}\n\nmodel Expense {\n  id          String    @id @default(uuid())\n  amount      Float\n  description String\n  categoryId  String?\n  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)\n  usedAt      DateTime\n  userId      String\n  user        User      @relation(fields: [userId], references: [id])\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n}\n\nmodel Income {\n  id          String    @id @default(uuid())\n  amount      Float\n  description String\n  categoryId  String?\n  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)\n  receivedAt  DateTime\n  userId      String\n  user        User      @relation(fields: [userId], references: [id])\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n}\n\nmodel Category {\n  id       String    @id @default(uuid())\n  name     String\n  userId   String\n  color    String\n  user     User      @relation(fields: [userId], references: [id])\n  expenses Expense[]\n  incomes  Income[]\n}\n",
-  "inlineSchemaHash": "a32a34439b1cd4dc5a71026359db6732810b53bc37722e080475631504bcbb8b",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"./generated/prisma\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id             String     @id @default(uuid())\n  email          String     @unique\n  password       String\n  name           String\n  categories     Category[]\n  expenses       Expense[]\n  incomes        Income[]\n  isEmailVerifed Boolean?   @default(false)\n  emailVerified  DateTime?\n  resetToken     String?\n  resetTokenExp  DateTime?\n  createdAt      DateTime   @default(now())\n  updatedAt      DateTime   @updatedAt\n}\n\nmodel Expense {\n  id          String    @id @default(uuid())\n  amount      Float\n  description String\n  categoryId  String?\n  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)\n  usedAt      DateTime\n  userId      String\n  user        User      @relation(fields: [userId], references: [id])\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n}\n\nmodel Income {\n  id          String    @id @default(uuid())\n  amount      Float\n  description String\n  categoryId  String?\n  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)\n  receivedAt  DateTime\n  userId      String\n  user        User      @relation(fields: [userId], references: [id])\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n}\n\nmodel Category {\n  id       String    @id @default(uuid())\n  name     String\n  userId   String\n  color    String\n  user     User      @relation(fields: [userId], references: [id])\n  expenses Expense[]\n  incomes  Income[]\n}\n",
+  "inlineSchemaHash": "f8b63b6bcec4c79afafa0aa0b562c16365d5e548230f6b775e8945b63df5ca60",
   "copyEngine": true
 }
 
@@ -238,6 +243,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
 path.join(process.cwd(), "prisma/generated/prisma/libquery_engine-darwin-arm64.dylib.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "prisma/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/generated/prisma/schema.prisma")
