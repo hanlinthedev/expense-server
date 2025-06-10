@@ -15,35 +15,53 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  password  String
-  name      String
-  expenses  Expense[]
-  budgets   Budget[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id             String     @id @default(uuid())
+  email          String     @unique
+  password       String
+  name           String
+  categories     Category[]
+  expenses       Expense[]
+  incomes        Income[]
+  isEmailVerifed Boolean?   @default(false)
+  emailVerified  DateTime?
+  resetToken     String?
+  resetTokenExp  DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 }
 
 model Expense {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   amount      Float
   description String
-  category    String
-  date        DateTime
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  usedAt      DateTime
   userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  user        User      @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
-model Budget {
-  id        String   @id @default(uuid())
-  amount    Float
-  category  String
-  month     DateTime
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Income {
+  id          String    @id @default(uuid())
+  amount      Float
+  description String
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  receivedAt  DateTime
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String
+  userId   String
+  color    String
+  user     User      @relation(fields: [userId], references: [id])
+  expenses Expense[]
+  incomes  Income[]
 }

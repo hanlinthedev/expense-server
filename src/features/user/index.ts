@@ -14,17 +14,18 @@ declare module 'elysia' {
   }
 }
 
-
-
-
-// Define your user models (moved from inside the plugin for clarity if needed elsewhere)
 const userModel = t.Object({
-  email: t.String({ format: 'email' ,error: 'Invalid email format'}),
+  email: t.String({ format: 'email', error: 'Invalid email format' }),
   password: t.String({ minLength: 8 }),
   name: t.String()
 });
 
-export const user = new Elysia({ name: 'user' }).use(database)
+export const user = new Elysia({
+  name: 'user',
+  detail: {
+    tags: ['User']
+  }
+}).use(database)
   .derive(({ db }) => {
     // Initialize repository and service here, passing the 'db' instance
     const userRepository = new UserRepository(db);
@@ -49,14 +50,22 @@ export const user = new Elysia({ name: 'user' }).use(database)
     return await userService.loginUser(body)
   }, {
     body: 'user.login'
-  }).use(auth).get('/me', async ({ userService, userId, set }) => {
-    if(!userId) throw new Error('User not found')
+  })
+  .post('/refresh', async ({ userService, body }) => {
+    return await userService.refreshToken(body.refreshToken)
+  }, {
+    body: t.Object({
+      refreshToken: t.String()
+    })
+  })
+  .use(auth).get('/me', async ({ userService, userId, set }) => {
+    if (!userId) throw new Error('User not found')
     // The handler now just calls the service
     const user = await userService.getMe(userId)
-    
+
     if (!user) {
       set.status = 404
       return { message: 'User not found' }
     }
     return user
-  } )
+  })

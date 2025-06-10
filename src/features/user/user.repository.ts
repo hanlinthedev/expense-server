@@ -13,16 +13,17 @@ export class UserRepository {
     return this.db.user.findUnique({ where: { email } });
   }
 
-  async findById(id: string): Promise<SignInUser| null> {
+  async findById(id: string): Promise<SignInUser | null> {
     return this.db.user.findUnique({
       where: { id }, select: {
         id: true,
         name: true,
         email: true,
-    } });
+      }
+    });
   }
 
-  async create(userData: Omit<User, 'id' | 'createdAt' | 'updatedAt'>): Promise<User> {
+  async create(userData: Pick<User, 'email' | 'password' | 'name'>): Promise<User> {
     return this.db.user.create({ data: userData });
   }
 }

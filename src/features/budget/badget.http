@@ -1,8 +1,0 @@
-### Local Env
-@BASE_URL = http://localhost:8080
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzA4ZDcwNC02MDViLTQ2ZTctOWY4YS01YjVkZTYxOWM3NzciLCJpYXQiOjE3NDkyODU0NTF9.YXDrVLAVQg3KKzVu3e85bHgk9AV8sr3Yl75nEe53h3k
-
-### Get All My Budgets
-GET {{BASE_URL}}/api/budget
-Authorization: Bearer {{TOKEN}}
-Content-Type: application/json

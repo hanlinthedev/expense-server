@@ -122,6 +122,10 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   name: 'name',
+  isEmailVerifed: 'isEmailVerifed',
+  emailVerified: 'emailVerified',
+  resetToken: 'resetToken',
+  resetTokenExp: 'resetTokenExp',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -130,21 +134,29 @@ exports.Prisma.ExpenseScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
   description: 'description',
-  category: 'category',
-  date: 'date',
+  categoryId: 'categoryId',
+  usedAt: 'usedAt',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.BudgetScalarFieldEnum = {
+exports.Prisma.IncomeScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
-  category: 'category',
-  month: 'month',
+  description: 'description',
+  categoryId: 'categoryId',
+  receivedAt: 'receivedAt',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  userId: 'userId',
+  color: 'color'
 };
 
 exports.Prisma.SortOrder = {
@@ -152,11 +164,17 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
   User: 'User',
   Expense: 'Expense',
-  Budget: 'Budget'
+  Income: 'Income',
+  Category: 'Category'
 };
 
 /**
