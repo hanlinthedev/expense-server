@@ -98,6 +98,7 @@ const app = new Elysia()
     },
   }))
   .use(database)
+  .get('/healthz', '/', () => 'OK')
   .group('/api/auth', (authApp) => authApp.use(user))
   .group('/api/incomes', (budgetApp) => budgetApp.use(income))
   .group('/api/expenses', (expenseApp) => expenseApp.use(expense))
